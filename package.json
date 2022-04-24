@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "@typegoose/typegoose": "^9.8.1"
-  }
-}
