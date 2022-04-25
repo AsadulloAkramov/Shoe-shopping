@@ -6,7 +6,16 @@ import { User } from './User';
 export class Order {
   constructor(params?: Order){
     if(params) {
-
+      this.orderItems = params.orderItems;
+      this.shippingAddress = params.shippingAddress;
+      this.paymentMethod = params.paymentMethod;
+      this.shippingPrice = params.shippingPrice;
+      this.taxPrice = params.taxPrice;
+      this.totalPrice = params.totalPrice;
+      this.isPaid = params.isPaid;
+      this.paidAt = params.paidAt;
+      this.isDelivered = params.isDelivered;
+      this.deliveredAt = params.deliveredAt;
     }
   }
 
