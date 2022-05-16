@@ -1,25 +1,15 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 
-export abstract class  BaseController {
-    protected abstract actImpl(req: Request, res: Response): Promise<void | any>
+export  class  BaseController {
 
     private jsonResponse( res: Response, code: number, message: string) {
-        return res.status(code).send(message);
-    }
-
-    public async act(req: Request, res: Response) {
-        try{
-            await this.actImpl(req, res);
-        }
-        catch(err) {
-            console.log(err.stack);
-        }
+        return res.status(code).json({message});
     }
 
     public ok<T>(res: Response, data?: T) {
         if(!!data) {
-            res.type('application/json')
-            return res.status(200).json(data)
+            res.type('application/json');
+            return res.status(200).json(data);
         }
         else {
             res.sendStatus(200);
@@ -27,13 +17,17 @@ export abstract class  BaseController {
     }
 
     public created<T> (res: Response, data?: T) {
-        if(!!data) {
-            res.type('application/json')
-            return res.status(200).json(data)
-        }
-        else {
-            res.sendStatus(200);
-        }
+      if(!!data) {
+        res.type('application/json');
+        return res.status(201).json(data);
+    }
+    else {
+        res.sendStatus(201);
+    }
+    }
+
+    public alreadyExist<T> (res: Response, message?: string ) {
+     return res.status(409).json({message: message ? message : 'User with this email already exists'});
     }
 
     public clientError(res: Response, message?: string) {

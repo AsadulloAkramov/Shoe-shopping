@@ -24,15 +24,15 @@ export class User {
   middleName?: string;
 
   @prop({ required: true })
-  salt!: number;
+  salt!: string;
 
-  @prop({ required: true })
+  @prop({ required: true , unique: true})
   email!: string;
 
   @prop({ required: true })
   password!: string;
 
-  @prop({ default: undefined })
+  @prop({ default: {}, _id: false })
   token: Token;
 }
 

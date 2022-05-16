@@ -12,7 +12,7 @@ export class Token {
   @prop({ default: null })
   accessToken?: string
 
-  @prop({ default: null })
+  @prop({ default: null})
   refreshToken?: string
 
   @prop({ default: 0 })

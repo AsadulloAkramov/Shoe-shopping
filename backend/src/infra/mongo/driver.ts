@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 import { Database } from '../../core/Drivers/database';
 import configurations from '../../config';
 

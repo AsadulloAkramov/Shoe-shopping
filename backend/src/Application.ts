@@ -1,9 +1,9 @@
-import Express from 'express';
+import * as Express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import { MongoDriver } from './infra/mongo/driver';
 import routes from './Routes';
-import mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 
 export class Application {
   public mongoUrl: string;
