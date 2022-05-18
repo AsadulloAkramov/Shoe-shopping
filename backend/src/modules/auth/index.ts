@@ -10,6 +10,7 @@ router.route('/sign-in')
 router.route('/login')
   .post((req, res) => new AuthController().login(req, res));
 
-
+router.route('/reset/email')
+  .put((req, res) => new AuthController().resetByEmail(req, res))
 
 export default router;

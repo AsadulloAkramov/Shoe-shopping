@@ -4,6 +4,7 @@ import { ILogin } from "../interfaces/auth";
 import { ISignIn } from "../interfaces/signIn";
 import PasswordService from "../services/PasswordService";
 import { Types } from "mongoose";
+import EmailService from "../services/EmailService";
 
 export class UserRepository {
 
@@ -71,5 +72,16 @@ export class UserRepository {
 
   async update(id: Types.ObjectId, params: any) {
     return await UserModel.updateMany({_id: id }, {$set: params});
+  }
+
+  async resetByEmail(emailParams: any) {
+    const user: any = await this.getUserByEmail(emailParams.email);
+    if(!user) return;
+
+    const to = `${emailParams.email}`,
+      subject = `Подтверждение по электронной почте (Shoe-shopping  api)`,
+      html = `Код для подтверждения: <b>${emailParams.code}</b><br><a href="${process.env.FRONT_URL}/auth/reset/confirm?email=${emailParams.email}&code=${emailParams.code}">эта ссылка</a>`;
+
+     return await new EmailService().send({ to, subject, html}); 
   }
 }

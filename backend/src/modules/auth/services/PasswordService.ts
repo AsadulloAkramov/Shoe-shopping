@@ -27,6 +27,9 @@ export default class PasswordService {
   async generatePassword(input: string) {
     return crypto.createHash("md5").update(input).digest("hex");
   }
+  async generateCode() {
+    return _.random(100000 , 999999);
+  }
   async readyData(doc: ISignInBody): Promise<ISignIn> {
     const randomSalt = {
       salt: await this.generateSalt()
