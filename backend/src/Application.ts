@@ -2,6 +2,7 @@ import * as Express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import { MongoDriver } from './infra/mongo/driver';
+import { RedisDriver } from './infra/redis/driver';
 import routes from './Routes';
 import * as mongoose from 'mongoose';
 
@@ -19,6 +20,7 @@ export class Application {
   async start() {
     try {
       await this.dbConnect();
+      await this.connectRedis();
       await this.startExpress();
     } catch (e) {}
   }
@@ -28,6 +30,14 @@ export class Application {
     await mongo.connect();
   }
 
+  async connectRedis() {
+    try{
+      const redisClient = RedisDriver.getInstance();
+    }
+    catch(err) {
+      console.log(`Redis connection failed`);
+    }
+  }
   async startExpress() {
     let corsOptions = {
       origin: '*',
@@ -42,7 +52,6 @@ export class Application {
     this.server.use(cors(corsOptions));
     this.server.use(routes);
     this.expressServer = this.server.listen(this.port, console.log(`Server listening on port ${this.port}...`));
-    console.log('app port: ', this.port);
   }
 
   shutdown = async () => {
